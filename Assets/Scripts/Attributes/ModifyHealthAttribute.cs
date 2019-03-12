@@ -7,6 +7,7 @@ public class ModifyHealthAttribute : MonoBehaviour
 
 	public bool destroyWhenActivated = false;
 	public int healthChange = -1;
+    public string targetTag = "Player";
 
 	//This will create a dialog window asking for which dialog to add
 	private void Reset()
@@ -25,13 +26,16 @@ public class ModifyHealthAttribute : MonoBehaviour
 		HealthSystemAttribute healthScript = colliderData.gameObject.GetComponent<HealthSystemAttribute>();
 		if(healthScript != null)
 		{
-			// subtract health from the player
-			healthScript.ModifyHealth(healthChange);
+            if(colliderData.gameObject.tag == targetTag)
+            {
+                // subtract health from the player
+                healthScript.ModifyHealth(healthChange);
 
-			if(destroyWhenActivated)
-			{
-				Destroy(this.gameObject);
-			}
+                if (destroyWhenActivated)
+                {
+                    Destroy(this.gameObject);
+                }
+            }
 		}
 	}
 }
